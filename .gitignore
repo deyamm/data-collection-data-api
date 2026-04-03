@@ -1,0 +1,15 @@
+output.log
+test_main.http
+__pycache__
+
+api/__pycache__
+
+core/__pycache__
+
+models/__pycache__
+
+schemas/__pycache__
+
+static
+
+utils/__pycache__

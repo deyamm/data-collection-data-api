@@ -1,0 +1,50 @@
+from pydantic import BaseModel
+
+class PriceSnapshot(BaseModel):
+    # 股票代码
+    symbol: str
+    # 股票名称
+    name: str
+    # 实时时间
+    snap_time: str
+    # 最新价
+    cur_price: float
+    # 涨跌幅
+    chg_pct: float
+    # 涨跌额
+    chg_amt: float
+    # 成交量
+    volume: float
+    # 成交额
+    turnover: float
+    # 振幅
+    amplitude: float
+    # 最高
+    high: float
+    # 最低
+    low: float
+    # 开盘价
+    open: float
+    # 昨收
+    pre_close: float
+    # 量比
+    volume_ratio: float
+    # 换手率
+    turnover_rate: float
+    # 动态市盈率
+    pe_dym: float
+    # 市净率
+    pb: float
+    # 总市值
+    total_market_value: float
+    # 流通市值
+    float_market_value: float
+    # 涨速
+    accer: float
+    # 5分钟涨跌
+    chg_5m: float
+    # 60日涨跌
+    chg_60d: float
+    # 年初至今涨跌幅
+    chg_year: float
+
