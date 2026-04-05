@@ -194,4 +194,4 @@ def index_basic_init2base_tushare():
 
 if __name__ == '__main__':
     # adjust_factor_init2base_CSMAR()
-    index_basic_init2base_tushare()
+    k_data_init2base_CSMAR('k-20260303-20260403')

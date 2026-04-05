@@ -1,13 +1,11 @@
 from fastapi import FastAPI
 
-from api.basic_data import basic_data_api
-from api.exchange_data import exchange_data_api
+from api.router import router as router_v1
 
 
 app = FastAPI()
 
-app.include_router(basic_data_api.router, prefix="/api/basic_data", tags=["basic_data"])
-app.include_router(exchange_data_api.router, prefix="/api/exchange_data", tags=["exchange_data"])
+app.include_router(router_v1)
 
 @app.get("/")
 async def root():

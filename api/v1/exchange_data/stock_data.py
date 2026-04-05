@@ -10,7 +10,7 @@ from service.exchange_data.stock_service import StockExchangeDataService
 
 from core.deps import get_stock_exchange_service
 
-router = APIRouter()
+router = APIRouter(prefix='/stock_data')
 
 @router.get("/current_snapshot", response_model=ComnResponse[List[PriceSnapshot]])
 def current_snapshot(service: StockExchangeDataService = Depends(get_stock_exchange_service)):

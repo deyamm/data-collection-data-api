@@ -11,7 +11,7 @@ from service.basic_data.market_service import MarketBasicDataService
 from core.deps import get_market_basic_data_service
 
 
-router = APIRouter()
+router = APIRouter(prefix='/market_basic')
 
 @router.get("/industry_info_em", response_model=ComnResponse[List[IndexInfo]])
 def industry_info_em(service: MarketBasicDataService = Depends(get_market_basic_data_service)):

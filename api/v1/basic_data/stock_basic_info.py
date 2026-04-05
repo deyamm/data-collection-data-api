@@ -8,7 +8,7 @@ from schemas.common.comn_response import ComnResponse
 from service.basic_data.stock_service import StockBasicDataService
 from core.deps import get_stock_basic_data_service
 
-router = APIRouter()
+router = APIRouter(prefix='/stock_basic')
 
 @router.get("/stock_info_collection", response_model=ComnResponse[List[StockInfo]])
 def stock_info_collection(service: StockBasicDataService = Depends(get_stock_basic_data_service)):

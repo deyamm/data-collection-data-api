@@ -30,6 +30,6 @@ class IndexInfoPO(BasicBase):
     # 加权方式
     weight_rule: Mapped[Optional[str]] = mapped_column(String(32), comment="加权方式")
     # 描述
-    desc: Mapped[Optional[str]] = mapped_column(String(256), comment="描述")
+    desc: Mapped[Optional[str]] = mapped_column(String(2048), comment="描述")
     # 终止日期
     exp_date: Mapped[Optional[str]] = mapped_column(String(16), comment="终止日期")

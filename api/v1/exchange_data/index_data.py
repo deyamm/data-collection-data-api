@@ -10,7 +10,7 @@ from core.deps import get_index_exchange_service
 from schemas.common.comn_response import ComnResponse
 
 
-router = APIRouter()
+router = APIRouter(prefix='/index_data')
 
 @router.get("/industry_history_price_em", response_model=ComnResponse[List[IndexKData]])
 def industry_history_price_em(

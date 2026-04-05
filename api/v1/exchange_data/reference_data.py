@@ -11,7 +11,7 @@ from schemas.common.comn_response import ComnResponse
 from core.deps import get_reference_exchange_service
 from service.exchange_data.reference_service import ReferenceExchangeDataService
 
-router = APIRouter()
+router = APIRouter(prefix='/reference_data')
 
 
 @router.get("/stock_daily_indictor", response_model=ComnResponse[List[StockIndicator]])
