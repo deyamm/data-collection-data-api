@@ -5,6 +5,7 @@ __pycache__
 api/__pycache__
 
 core/__pycache__
+core/config.py
 
 models/__pycache__
 
