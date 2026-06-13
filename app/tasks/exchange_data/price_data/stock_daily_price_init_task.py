@@ -99,7 +99,6 @@ async def stock_daily_price_init_handler(request: TaskRunRequest) -> TaskRunResu
 def register_stock_daily_price_init_task():
     """注册task和handler到registry中"""
     registry.register_handler('stock_daily_price_init_handler', stock_daily_price_init_handler)
-    logger.info("Registered handler: stock_daily_price_init_handler")
 
     registry.register_task_template(
         TaskTemplateInfo(
@@ -258,4 +257,3 @@ def register_stock_daily_price_init_task():
             ]
         )
     )
-    logger.info("Registered task template: stock_daily_price_init")

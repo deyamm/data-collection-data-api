@@ -48,7 +48,6 @@ async def write_rows(mapping: StorageMapping, columns: list[StorageColumnMapping
             INSERT INTO {table} ({column_sql})
             VALUES ({values_sql})
         """
-        logger.info(f"sql: {sql}")
 
     elif mapping.write_strategy == "UPSERT":
         update_columns = [c for c in column_names if c not in unique_fields]
@@ -71,7 +70,6 @@ async def write_rows(mapping: StorageMapping, columns: list[StorageColumnMapping
             VALUES ({values_sql})
             ON DUPLICATE KEY UPDATE {update_sql}
         """
-        logger.info(f"sql: {sql}")
     else:
         raise ValueError(f"暂不支持写入模式: {mapping.write_strategy}")
 

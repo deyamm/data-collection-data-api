@@ -46,21 +46,22 @@ class BaseCollectTask(ABC):
 
             # 批处理采集，默认一次批处理所有数据，特殊任务可重写 collect_batches 实现分批处理
             batch_no = 0
+            total_rows = 0
             runtime.set_stage("COLLECT")
             async for raw_rows in self.collect_batches(ctx.params, ctx):
                 batch_no += 1
-                runtime.add_log("INFO", f"处理第 {batch_no} 批数据，记录数: {len(raw_rows)}")
                 logger.info(f"处理第 {batch_no} 批数据，记录数: {len(raw_rows)}")
 
                 raw_rows = await self.after_collect(ctx, raw_rows, runtime)
 
                 runtime.collected_count += len(raw_rows)
-                runtime.add_log("INFO", f"第 {batch_no} 批采集完成，原始记录数: {len(raw_rows)}")
+                total_rows += len(raw_rows)
                 logger.info(f"第 {batch_no} 批采集完成，原始记录数: {len(raw_rows)}")
 
                 await self.process_batch(batch_no, raw_rows, ctx, runtime)
                 del raw_rows  # 释放内存
 
+            logger.info(f"所有批次采集完成，共{batch_no}批，累计原始记录数: {total_rows}")
             runtime.set_stage("AFTER_SUCCESS")
             await self.after_success(ctx, runtime)
 

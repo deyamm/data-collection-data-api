@@ -1,9 +1,35 @@
-from .stock_daily_price_by_code_task import register_stock_daily_price_by_code_task
-from .stock_daily_price_by_date_task import register_stock_daily_price_by_date_task
-from .stock_daily_price_init_task import register_stock_daily_price_init_task
+from .basic_data.stock_basic_data_task import register_stock_basic_data_task
+from .basic_data.index_basic_data_task import register_index_basic_data_task
+from .basic_data.index_constituent_data_task import register_index_constituent_data_task
+from .exchange_data.reference_data.stock_daily_indicator_init_task import register_stock_daily_indicator_init_task
+from .exchange_data.reference_data.stock_daily_moneyflow_init_task import register_stock_daily_moneyflow_init_task
+from .exchange_data.reference_data.stock_daily_indicator_data_task import register_stock_daily_indicator_data_task
+from .exchange_data.reference_data.stock_daily_moneyflow_data_task import register_stock_daily_moneyflow_data_task
+from .exchange_data.reference_data.stock_adjust_factor_init_task import register_stock_adjust_factor_init_task
+from .exchange_data.reference_data.stock_adjust_factor_data_task import register_stock_adjust_factor_data_task
+from .exchange_data.reference_data.index_daily_indicator_init_task import register_index_daily_indicator_init_task
+from .exchange_data.reference_data.index_daily_indicator_data_task import register_index_daily_indicator_data_task
+from .exchange_data.price_data.index_daily_price_init_task import register_index_daily_price_init_task
+from .exchange_data.price_data.index_daily_price_task import register_index_daily_price_task
+from .exchange_data.price_data.stock_daily_price_by_code_task import register_stock_daily_price_by_code_task
+from .exchange_data.price_data.stock_daily_price_by_date_task import register_stock_daily_price_by_date_task
+from .exchange_data.price_data.stock_daily_price_init_task import register_stock_daily_price_init_task
 
 def register_all_tasks():
     """注册所有任务模板和处理函数"""
     register_stock_daily_price_by_code_task()
     register_stock_daily_price_by_date_task()
     register_stock_daily_price_init_task()
+    register_stock_basic_data_task()
+    register_index_basic_data_task()
+    register_index_constituent_data_task()
+    register_stock_daily_indicator_init_task()
+    register_stock_daily_moneyflow_init_task()
+    register_stock_daily_indicator_data_task()
+    register_stock_daily_moneyflow_data_task()
+    register_stock_adjust_factor_init_task()
+    register_stock_adjust_factor_data_task()
+    register_index_daily_indicator_init_task()
+    register_index_daily_indicator_data_task()
+    register_index_daily_price_init_task()
+    register_index_daily_price_task()

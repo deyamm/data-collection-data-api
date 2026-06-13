@@ -1,15 +1,13 @@
-from api.exchange_data.market_data.stock_price import get_current_snapshot, get_stock_history_price
-from schemas.exchange_data.price_snapshot import PriceSnapshot
-from schemas.exchange_data.stock_k_data import StockKData
-import akshare as ak
+import asyncio
 
+from app.core.providers import ak_provider
+from app.core.providers import ts_provider
 
-def test_get_current_snapshot():
-    snap = get_current_snapshot()
-    print(snap)
-    assert isinstance(snap, list)
-    assert len(snap) > 0
-    assert isinstance(snap[0], dict)
+async def test():
 
-snap_df = ak.stock_zh_a_spot_em().drop(columns="序号")
-print(snap_df.head())
+    industry = await ts_provider.index_basic()
+
+    print(industry.columns)
+    print(industry.head())
+
+asyncio.run(test())

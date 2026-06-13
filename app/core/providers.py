@@ -58,9 +58,19 @@ class AkShareProvider:
         return ak.stock_board_industry_cons_em(symbol=symbol)
     
     def stock_board_industry_name_ths(self) -> pd.DataFrame:
+        """获取同花顺行业板块列表，文档中没有明确说明接口名称，具体返回需要查看调用结果
+        Index(['name', 'code'], dtype='object')
+        name    code
+        0   半导体  881121
+        1    白酒  881273
+        2  白色家电  881131
+        3    保险  881156
+        4  包装印刷  881138
+        """
         return ak.stock_board_industry_name_ths()
     
     def stock_board_industry_summary_ths(self) -> pd.DataFrame:
+        """同花顺行业一览表 https://akshare.akfamily.xyz/data/stock/stock.html#id373"""
         return ak.stock_board_industry_summary_ths()
     
     def stock_board_concept_name_em(self) -> pd.DataFrame:
@@ -70,6 +80,15 @@ class AkShareProvider:
         return ak.stock_board_concept_cons_em(symbol=symbol)
     
     def stock_board_concept_name_ths(self) -> pd.DataFrame:
+        """获取同花顺概念板块列表，文档中没有明确说明接口名称，具体返回需要查看调用结果
+        Index(['name', 'code'], dtype='object')
+            name    code
+        0  阿尔茨海默概念  308614
+        1    AI PC  309121
+        2     AI手机  309120
+        3     AI语料  309126
+        4   阿里巴巴概念  301558
+        """
         return ak.stock_board_concept_name_ths()
     
     def index_stock_cons_csindex(self, symbol: str):
@@ -161,25 +180,37 @@ class TuShareProviderAsync:
         """个股在指定日期范围的日线行情数据"""
         return settings.TU_PRO.daily(ts_code=ts_code, start_date=start_date, end_date=end_date)
     
-    async def daily_basic(self, ts_code: str = '', trade_date: str = '', start_date: str = '', end_date: str = '') -> pd.DataFrame:
-        """个股每日指标数据"""
-        return settings.TU_PRO.daily_basic(ts_code=ts_code, trade_date=trade_date, start_date=start_date, end_date=end_date)
-    
     async def daily_moneyflow(self, ts_code: str = '', trade_date: str = '', start_date: str = '', end_date: str = '') -> pd.DataFrame:
         """个股资金流向"""
         return settings.TU_PRO.moneyflow(ts_code=ts_code, trade_date=trade_date, start_date=start_date, end_date=end_date)
     
-    async def stock_basic(self, ts_code: str = '', name: str = '', market: str = '', list_status: str = '', exchange: str = '', is_hs: str = '') -> pd.DataFrame:
+    async def stock_basic(self) -> pd.DataFrame:
         """股票基本信息"""
-        return settings.TU_PRO.stock_basic(ts_code=ts_code, name=name, market=market, list_status=list_status, exchange=exchange, is_hs=is_hs)
+        return settings.TU_PRO.stock_basic()
     
-    async def index_basic(self, ts_code: str = '', name: str = '', market: str = '', publisher: str = '', category: str = '') -> pd.DataFrame:
+    async def index_basic(self) -> pd.DataFrame:
         """指数基本信息"""
-        return settings.TU_PRO.index_basic(ts_code=ts_code, name=name, market=market, publisher=publisher, category=category)
+        return settings.TU_PRO.index_basic()
     
     async def index_daily(self, ts_code: str = '', trade_date: str = '', start_date: str = '', end_date: str = '') -> pd.DataFrame:
         """指数日线行情"""
         return settings.TU_PRO.index_daily(ts_code=ts_code, trade_date=trade_date, start_date=start_date, end_date=end_date)
+    
+    async def index_weight(self, index_code: str = '', start_date: str = '', end_date: str = '') -> pd.DataFrame:
+        """指数成分和权重数据，月度数据，一般传入当月第一天和最后一天的日期，获取当月的成分和权重数据"""
+        return settings.TU_PRO.index_weight(index_code=index_code, start_date=start_date, end_date=end_date)
+    
+    async def stock_daily_indicator(self, ts_code: str = '', trade_date: str = '', start_date: str = '', end_date: str = '') -> pd.DataFrame:
+        """个股每日指标数据"""
+        return settings.TU_PRO.daily_basic(ts_code=ts_code, trade_date=trade_date, start_date=start_date, end_date=end_date)
+
+    async def index_daily_indicator(self, ts_code: str = '', trade_date: str = '', start_date: str = '', end_date: str = '') -> pd.DataFrame:
+        """指数每日指标数据"""
+        return settings.TU_PRO.index_dailybasic(ts_code=ts_code, trade_date=trade_date, start_date=start_date, end_date=end_date)
+    
+    async def adj_factor(self, ts_code: str = '', trade_date: str = '', start_date: str = '', end_date: str = '') -> pd.DataFrame:
+        """股票复权因子数据"""
+        return settings.TU_PRO.adj_factor(ts_code=ts_code, trade_date=trade_date, start_date=start_date, end_date=end_date)
     
 
 ts_provider = TuShareProviderAsync()

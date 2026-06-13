@@ -14,9 +14,9 @@ class StockDailyPriceByCodeTask(BaseCollectTask):
     根据传入的股票代码和开始日期、结束日期，采集指定股票指定时间范围的日线价格数据。
     """
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self):
         
-        super().__init__(*args, **kwargs)
+        super().__init__()
         
         self.task_code = 'stock_daily_price_by_code'
 
@@ -49,7 +49,6 @@ async def stock_daily_price_by_code_handler(request: TaskRunRequest) -> TaskRunR
 def register_stock_daily_price_by_code_task():
     """注册task和handler到registry中"""
     registry.register_handler('stock_daily_price_by_code_handler', stock_daily_price_by_code_handler)
-    logger.info("Registered handler: stock_daily_price_by_code_handler")
 
     registry.register_task_template(
         TaskTemplateInfo(
@@ -186,4 +185,3 @@ def register_stock_daily_price_by_code_task():
             ]
         )
     )
-    logger.info("Registered task template: stock_daily_price_by_code")
