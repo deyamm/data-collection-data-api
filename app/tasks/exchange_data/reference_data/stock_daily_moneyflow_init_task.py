@@ -81,7 +81,7 @@ class StockDailyMoneyflowInitTask(BaseCollectTask):
                 logger.info(f"股票{ts_code}没有获取到历史资金流向数据")
 
             if index < len(ts_codes) - 1:
-                await asyncio.sleep(5)
+                await asyncio.sleep(1)
 
 
 async def stock_daily_moneyflow_init_handler(request: TaskRunRequest) -> TaskRunResult:

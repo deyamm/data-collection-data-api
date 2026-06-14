@@ -1,8 +1,10 @@
 
+import asyncio
 import logging
 from typing import Any, cast
 
 import numpy as np
+import pandas as pd
 
 from app.core.registry import registry
 from app.schemas.collection_task.task_template import ExecutionContext, OutputField, TaskRunRequest, TaskRunResult, TaskTemplateInfo
@@ -14,6 +16,7 @@ logger = logging.getLogger(__name__)
 class IndexBasicDataTask(BaseCollectTask):
     """
     采集指数基本数据，包括指数代码、简称、全称、市场、发布方等信息，该接口只能返回MSCI、中证、上交所、深交所、中金、申万及其他指数，同花顺、东财等版块、概念等指数需要其他接口。
+    由于接口一次最多返回8000条数据，因此需要按市场来分批采集，市场包括MSCI=MSCI指数，CSI=中证指数，SSE=上交所指数，SZSE=深交所指数，CICC=中金指数，SW=申万指数，OTH=其他指数。
     """
 
     def __init__(self):
@@ -27,12 +30,19 @@ class IndexBasicDataTask(BaseCollectTask):
 
     async def collect(self, params: dict[str, Any], ctx: ExecutionContext) -> list[dict[str, Any]]:
 
-        index_basic = await self.ts.index_basic()
-        
-        index_basic = index_basic.replace([np.inf, -np.inf], np.nan)
-        index_basic = index_basic.astype(object).where(index_basic.notnull(), None)
+        all_index_basic = []
 
-        return cast(list[dict[str, Any]], index_basic.rename(columns=str).to_dict("records"))
+        for market in ['MSCI', 'CSI', 'SSE', 'SZSE', 'CICC', 'SW', 'OTH']:
+            logger.info(f"开始采集指数基本数据，市场={market}")
+            index_basic = await self.ts.index_basic(market=market)
+            all_index_basic.append(index_basic)
+            await asyncio.sleep(10)  # 10S钟采集一次，避免接口限频
+        
+        all_index_basic = pd.concat(all_index_basic, ignore_index=True)
+        all_index_basic = all_index_basic.replace([np.inf, -np.inf], np.nan)
+        all_index_basic = all_index_basic.astype(object).where(all_index_basic.notnull(), None)
+
+        return cast(list[dict[str, Any]], all_index_basic.rename(columns=str).to_dict("records"))
 
 
 async def index_basic_data_handler(request: TaskRunRequest) -> TaskRunResult:
@@ -50,7 +60,7 @@ def register_index_basic_data_task():
         TaskTemplateInfo(
             task_code='index_basic_data',
             task_name='指数基本数据采集',
-            task_desc='采集所有指数的基本信息。',
+            task_desc='采集指数基本数据，包括指数代码、简称、全称、市场、发布方等信息，该接口只能返回MSCI、中证、上交所、深交所、中金、申万及其他指数，同花顺、东财等版块、概念等指数需要其他接口。由于接口一次最多返回8000条数据，因此需要按市场来分批采集，市场包括MSCI=MSCI指数，CSI=中证指数，SSE=上交所指数，SZSE=深交所指数，CICC=中金指数，SW=申万指数，OTH=其他指数',
             handler_name='index_basic_data_handler',
             data_source='TUSHARE',
             asset_type='指数',

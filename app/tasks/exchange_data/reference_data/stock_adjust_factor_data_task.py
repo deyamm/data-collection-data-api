@@ -132,7 +132,7 @@ def register_stock_adjust_factor_data_task():
                     field_code="adj_factor",
                     field_name="复权因子",
                     field_type="DECIMAL",
-                    required=False,
+                    required=True,
                     unique_key=True,
                     sort_no=3,
                     field_desc="复权因子"

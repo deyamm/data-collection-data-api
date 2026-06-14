@@ -188,9 +188,9 @@ class TuShareProviderAsync:
         """股票基本信息"""
         return settings.TU_PRO.stock_basic()
     
-    async def index_basic(self) -> pd.DataFrame:
+    async def index_basic(self, market: str = '') -> pd.DataFrame:
         """指数基本信息"""
-        return settings.TU_PRO.index_basic()
+        return settings.TU_PRO.index_basic(market=market)
     
     async def index_daily(self, ts_code: str = '', trade_date: str = '', start_date: str = '', end_date: str = '') -> pd.DataFrame:
         """指数日线行情"""
